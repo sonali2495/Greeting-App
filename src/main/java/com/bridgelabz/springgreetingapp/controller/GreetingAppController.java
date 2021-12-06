@@ -61,8 +61,15 @@ public class GreetingAppController {
         return greetingService.getAllMessages();
     }
 
+    //http://localhost:8080/update-message/3
     @PutMapping("/update-message/{id}")
     public Object updateMessage(@PathVariable(value = "id") int id, @RequestBody GreetingDto greetingDto) {
         return greetingService.updateMessage(id, greetingDto);
+    }
+
+    //http://localhost:8080/delete-message/2
+    @DeleteMapping("/delete-message/{id}")
+    public Object deleteMessage(@PathVariable(value = "id") int id) {
+        return greetingService.deleteMessage(id);
     }
 }

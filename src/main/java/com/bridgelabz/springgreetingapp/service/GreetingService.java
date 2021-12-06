@@ -50,4 +50,15 @@ public class GreetingService {
         } else
             return "Record Not Found!";
     }
+
+    public Object deleteMessage(int id) {
+        Optional<GreetingEntity> idCheck = greetingRepo.findById(id);
+        if (idCheck.isPresent()) {
+            GreetingEntity greetingEntity = greetingRepo.findById(id).get();
+            greetingRepo.delete(greetingEntity);
+            return "Message Deleted Successfully";
+        } else
+            return "Record Not Found!";
+    }
+
 }

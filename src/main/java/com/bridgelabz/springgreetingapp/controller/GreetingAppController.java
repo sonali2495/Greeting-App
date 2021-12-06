@@ -60,4 +60,9 @@ public class GreetingAppController {
     public Object getAllMessages() {
         return greetingService.getAllMessages();
     }
+
+    @PutMapping("/update-message/{id}")
+    public Object updateMessage(@PathVariable(value = "id") int id, @RequestBody GreetingDto greetingDto) {
+        return greetingService.updateMessage(id, greetingDto);
+    }
 }

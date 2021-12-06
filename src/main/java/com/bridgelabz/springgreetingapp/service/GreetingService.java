@@ -39,4 +39,15 @@ public class GreetingService {
         }
         return greetingRepo.findAll();
     }
+
+    public Object updateMessage(int id, GreetingDto greetingDto) {
+        Optional<GreetingEntity> idCheck = greetingRepo.findById(id);
+        if (idCheck.isPresent()) {
+            GreetingEntity greetingEntity = this.greetingRepo.findById(id).get();
+            greetingEntity.setMessage(greetingDto.getMessage());
+            this.greetingRepo.save(greetingEntity);
+            return "Message Updated Successfully" + "\n" + greetingEntity;
+        } else
+            return "Record Not Found!";
+    }
 }

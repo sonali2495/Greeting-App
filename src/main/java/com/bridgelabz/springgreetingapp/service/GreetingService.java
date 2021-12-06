@@ -6,6 +6,7 @@ import com.bridgelabz.springgreetingapp.repository.GreetingRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,5 +30,13 @@ public class GreetingService {
             return greetingRepo.findById(id);
         else
             return "Given id is Not Found";
+    }
+
+    public Object getAllMessages() {
+        List<GreetingEntity> allMessages = greetingRepo.findAll();
+        if (allMessages.isEmpty()) {
+            return "Message Box is Empty";
+        }
+        return greetingRepo.findAll();
     }
 }

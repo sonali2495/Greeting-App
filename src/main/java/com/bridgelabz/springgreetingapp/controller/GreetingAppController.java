@@ -7,6 +7,7 @@ package com.bridgelabz.springgreetingapp.controller;
  * @version 2.6.0
  * @since 06-12-2021
  */
+
 import com.bridgelabz.springgreetingapp.dto.GreetingDto;
 import com.bridgelabz.springgreetingapp.dto.UserDto;
 import com.bridgelabz.springgreetingapp.entity.GreetingEntity;
@@ -32,7 +33,7 @@ public class GreetingAppController {
     //http://localhost:8080/greeting/?firstName=Sonali&lastName=Gadge
     @GetMapping("/greeting")
     public String greeting(@RequestParam(value = "firstName", defaultValue = "") String firstName,
-                             @RequestParam(value = "lastName", defaultValue = "") String lastName) {
+                           @RequestParam(value = "lastName", defaultValue = "") String lastName) {
 
         if (firstName == null && lastName == null) {
             home();

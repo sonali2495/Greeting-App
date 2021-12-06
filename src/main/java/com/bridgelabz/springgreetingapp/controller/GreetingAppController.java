@@ -42,10 +42,16 @@ public class GreetingAppController {
 
     //http://localhost:8080/add-greeting
     @PostMapping("/add-greeting")
-    public GreetingEntity addGreeting(@RequestBody UserDto user) {
+    public String addGreeting(@RequestBody UserDto user) {
         String message = String.format(template, user.getFirstName() + " " + user.getLastName());
         GreetingDto greetingDto = new GreetingDto();
         greetingDto.setMessage(message);
         return greetingService.addMessage(greetingDto);
+    }
+
+    //http://localhost:8080/findBy/1
+    @GetMapping("/findBy/{id}")
+    public Object findGreeting(@PathVariable(value = "id") int id) {
+        return greetingService.findMessageById(id);
     }
 }

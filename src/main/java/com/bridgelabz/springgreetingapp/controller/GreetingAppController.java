@@ -7,8 +7,11 @@ package com.bridgelabz.springgreetingapp.controller;
  * @version 2.6.0
  * @since 06-12-2021
  */
-import com.bridgelabz.springgreetingapp.dto.Greeting;
-import com.bridgelabz.springgreetingapp.dto.User;
+import com.bridgelabz.springgreetingapp.dto.GreetingDto;
+import com.bridgelabz.springgreetingapp.dto.UserDto;
+import com.bridgelabz.springgreetingapp.entity.GreetingEntity;
+import com.bridgelabz.springgreetingapp.service.GreetingService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.atomic.AtomicLong;
@@ -16,7 +19,9 @@ import java.util.concurrent.atomic.AtomicLong;
 @RestController
 public class GreetingAppController {
     private static final String template = "Hello %s!";
-    private final AtomicLong counter = new AtomicLong();
+
+    @Autowired
+    private GreetingService greetingService;
 
     @RequestMapping(value = {"", "/"})
     @ResponseBody
@@ -26,14 +31,21 @@ public class GreetingAppController {
 
     //http://localhost:8080/greeting/?firstName=Sonali&lastName=Gadge
     @GetMapping("/greeting")
-    public Greeting greeting(@RequestParam(value = "firstName", defaultValue = "") String firstName,
+    public String greeting(@RequestParam(value = "firstName", defaultValue = "") String firstName,
                              @RequestParam(value = "lastName", defaultValue = "") String lastName) {
-        User user = new User();
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        if (user.getFirstName() == null && user.getLastName() == null) {
+
+        if (firstName == null && lastName == null) {
             home();
         }
-        return new Greeting(counter.incrementAndGet(), String.format(template, user));
+        return String.format(template, firstName + " " + lastName);
+    }
+
+    //http://localhost:8080/add-greeting
+    @PostMapping("/add-greeting")
+    public GreetingEntity addGreeting(@RequestBody UserDto user) {
+        String message = String.format(template, user.getFirstName() + " " + user.getLastName());
+        GreetingDto greetingDto = new GreetingDto();
+        greetingDto.setMessage(message);
+        return greetingService.addMessage(greetingDto);
     }
 }
